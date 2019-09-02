@@ -1,0 +1,38 @@
+#!/bin/sh
+
+##### VARIABLES #####
+USER='johnedquinn'
+HOST='67.205.145.207'
+
+##### FUNCTIONS #####
+usage() {
+  cat <<EOF
+Usage: enterdiscreet [OPTIONS]
+OPTIONS:
+	-h : Display help message
+  -u : Specify user (default is jquinn13)
+EOF
+
+  exit $1
+}
+
+##### PARSE COMMAND LINE OPTIONS #####
+
+while [ $# -gt 0 ]; do
+	case $1 in
+		-h)
+			usage 0
+			;;
+		-u)
+			USER=$2
+			shift
+			;;
+		*)
+			usage 0
+			;;
+	esac
+	shift
+done
+
+##### FILTER PIPELINE #####
+ssh ${USER}@${HOST}

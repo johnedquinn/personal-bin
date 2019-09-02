@@ -1,0 +1,40 @@
+#!/bin/sh
+
+##### VARIABLES #####
+USER='jquinn13'
+PORT='00'
+
+##### FUNCTIONS #####
+usage() {
+  cat <<EOF
+Usage: entercse [OPTIONS] [PORT]
+OPTIONS:
+  -u : Specify user (default is jquinn13)
+PORT:
+  00 : (default)
+  01 : (specify)
+EOF
+
+  exit $1
+}
+
+##### PARSE COMMAND LINE OPTIONS #####
+
+while [ $# -gt 0 ]; do
+	case $1 in
+		-h)
+			usage 0
+			;;
+		-u)
+			USER=$2
+			shift
+			;;
+		*)
+			PORT=$1
+			;;
+	esac
+	shift
+done
+
+##### FILTER PIPELINE #####
+ssh ${USER}@student${PORT}.cse.nd.edu

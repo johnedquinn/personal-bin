@@ -1,0 +1,36 @@
+#!/bin/sh
+
+##### VARIABLES #####
+USER='jquinn13'
+
+##### FUNCTIONS #####
+usage() {
+  cat <<EOF
+Usage: enterdb [OPTIONS]
+OPTIONS:
+  -u : Specify user (default is jquinn13)
+EOF
+
+  exit $1
+}
+
+##### PARSE COMMAND LINE OPTIONS #####
+
+while [ $# -gt 0 ]; do
+	case $1 in
+		-h)
+			usage 0
+			;;
+		-u)
+			USER=$2
+			shift
+			;;
+		*)
+			usage 0
+			;;
+	esac
+	shift
+done
+
+##### FILTER PIPELINE #####
+ssh ${USER}@dsg1.crc.nd.edu
