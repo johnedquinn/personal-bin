@@ -1,0 +1,62 @@
+#!/bin/sh
+
+##### VARIABLES #####
+NEW_FILE='prog.cpp'
+
+##### FUNCTIONS #####
+usage() {
+  cat <<EOF
+Usage: entercse [OPTIONS] [PORT]
+OPTIONS:
+  -u : Specify user (default is jquinn13)
+PORT:
+  00 : (default)
+  01 : (specify)
+EOF
+
+  exit $1
+}
+
+##### PARSE COMMAND LINE OPTIONS #####
+
+while [ $# -gt 0 ]; do
+	case $1 in
+		-h)
+			usage 0
+			;;
+		*)
+			NEW_FILE=$1
+			;;
+	esac
+	shift
+done
+
+if [ -f "${NEW_FILE}" ]; then
+	echo "File ${NEW_FILE} already exists. Please specify new file."
+	exit 1
+fi
+
+##### FILTER PIPELINE #####
+cat <<EOF > ${NEW_FILE}
+/*
+ * File: ${NEW_FILE}
+ * Author: John Ed Quinn
+*/
+
+/* PREAMBLE */
+#include <iostream>
+#include <vector>
+#include <string>
+#include <sstream>
+using namespace std;
+
+/// Function: main
+/// Description: X
+int main(int argc, char * argv []) {
+
+	return 0;
+}
+
+EOF
+echo "Created file '${NEW_FILE}'"
+vim ${NEW_FILE}
