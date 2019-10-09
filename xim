@@ -1,0 +1,91 @@
+#!/bin/sh
+
+##### VARIABLES #####
+NEW_FILE=''
+
+##### FUNCTIONS #####
+usage() {
+  cat <<EOF
+Usage: xim [File]
+File:
+  *.cpp : C++
+	*.c   : C
+	*.py  : Python3
+EOF
+
+  exit $1
+}
+
+##### PARSE COMMAND LINE OPTIONS #####
+while [ $# -gt 0 ]; do
+	case $1 in
+		-h)
+			usage 0
+			;;
+		*)
+			NEW_FILE=$1
+			;;
+	esac
+	shift
+done
+
+### If file exists, open file
+if [ -f "${NEW_FILE}" ]; then
+	vim ${NEW_FILE}
+	exit 0
+fi
+
+### If file doesn't exist, display message
+echo "Creating file '${NEW_FILE}'"
+
+### Create a CPP File ###
+if [[ "${NEW_FILE}" = *.cpp ]]; then
+cat <<EOF > ${NEW_FILE}
+/*
+ * File: ${NEW_FILE}
+ * Author: John Ed Quinn
+*/
+
+/* PREAMBLE */
+#include <iostream>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <map>
+#include <set>
+using namespace std;
+
+/// Function: main
+/// Description: X
+int main(int argc, char * argv []) {
+
+	return 0;
+}
+
+EOF
+fi
+
+### Create a CPP File ###
+if [[ "${NEW_FILE}" = *.py ]]; then
+cat <<EOF > ${NEW_FILE}
+#!/usr/bin/env python3
+
+'''
+#
+# File: ${NEW_FILE}
+# Author: John Ed Quinn
+#
+'''
+
+## Function: main
+## Description: X
+int main(int argc, char * argv []) {
+
+	return 0;
+}
+
+EOF
+fi
+
+##### Open new file #####
+vim ${NEW_FILE}
