@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ##### VARIABLES #####
 NEW_FILE=''
@@ -66,7 +66,7 @@ EOF
 fi
 
 ### Create a CPP File ###
-if [[ "${NEW_FILE}" = *.py ]]; then
+if [ "${NEW_FILE}" = *.py ]; then
 cat <<EOF > ${NEW_FILE}
 #!/usr/bin/env python3
 
