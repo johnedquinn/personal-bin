@@ -8,9 +8,10 @@ usage() {
   cat <<EOF
 Usage: xim [File]
 File:
-  *.cpp : C++
-	*.c   : C
-	*.py  : Python3
+  	*.cpp  : C++
+	*.c    : C
+	*.py   : Python3
+	*.html : HTML
 EOF
 
   exit $1
@@ -41,10 +42,10 @@ echo "Creating file '${NEW_FILE}'"
 ### Create a CPP File ###
 if [[ "${NEW_FILE}" = *.cpp ]]; then
 cat <<EOF > ${NEW_FILE}
-/*
- * File: ${NEW_FILE}
- * Author: John Ed Quinn
-*/
+/// @file:   ${NEW_FILE}
+/// @author: John Ed Quinn
+/// @desc:   NA
+/// @notes:  NA
 
 /* PREAMBLE */
 #include <iostream>
@@ -55,9 +56,30 @@ cat <<EOF > ${NEW_FILE}
 #include <set>
 using namespace std;
 
-/// Function: main
-/// Description: X
-int main(int argc, char * argv []) {
+/// @func: main
+/// @desc: main driver
+int main (int argc, char * argv []) {
+
+	return 0;
+}
+
+EOF
+fi
+
+### Create a C File ###
+if [[ "${NEW_FILE}" = *.c ]]; then
+cat <<EOF > ${NEW_FILE}
+/// @file:   ${NEW_FILE}
+/// @author: John Ed Quinn
+/// @desc:   NA
+/// @notes:  NA
+
+/* PREAMBLE */
+#include <stdlib.h>
+
+/// @func: main
+/// @desc: main driver
+int main (int argc, char * argv []) {
 
 	return 0;
 }
@@ -66,7 +88,7 @@ EOF
 fi
 
 ### Create a CPP File ###
-if [ "${NEW_FILE}" = *.py ]; then
+if [[ "${NEW_FILE}" = *.py ]]; then
 cat <<EOF > ${NEW_FILE}
 #!/usr/bin/env python3
 
@@ -83,6 +105,42 @@ int main(int argc, char * argv []) {
 
 	return 0;
 }
+
+EOF
+fi
+
+### Create an HTML File ###
+BOOTSTRAP_LINK='<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">'
+if [[ "${NEW_FILE}" = *.html ]]; then
+cat <<EOF > ${NEW_FILE}
+<!DOCTYPE html>
+<html>
+
+<!--
+-- @file:   ${NEW_FILE}
+-- @author: John Ed Quinn
+-- @desc:   NA
+-- @notes:  NA
+-->
+
+<!-- START OF HEAD -->
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+	<!--<meta name="description" content="Website Description">-->
+	<!--<link rel="stylesheet" href="./XXX.css">-->
+	<!--${BOOTSTRAP_LINK}-->
+	<title>TITLE</title>
+</head>
+
+<!-- START OF BODY -->
+<body>
+	<h1>Hello, world!</h1>
+	<p>Some random description</p>
+	<button>Some random button</button>
+</body>
+
+</html>
 
 EOF
 fi
