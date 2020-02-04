@@ -1,5 +1,9 @@
 #!/bin/bash
 
+### @file:   xim
+### @author: John Ed Quinn
+### @desc:   Creates templated files for programming.
+### @notes:  NA
 
 ##### FUNCTIONS #####
 usage() {
