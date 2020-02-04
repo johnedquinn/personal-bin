@@ -1,21 +1,33 @@
 #!/bin/bash
 
-##### VARIABLES #####
-NEW_FILE=''
 
 ##### FUNCTIONS #####
 usage() {
   cat <<EOF
-Usage: xim [File]
-File:
+Description:
+	A command that creates templated files for programming.
+Usage:
+	xim -h
+	xim [FLAGS] FILE
+Supported File Types:
   	*.cpp  : C++
 	*.c    : C
 	*.py   : Python3
 	*.html : HTML
+Flags:
+	-h     : Syntax help
+	-c     : Open in Visual Studio Code (code).
+	-n     : Do not open after creating file
 EOF
 
   exit $1
 }
+
+##### GLOBALS #####
+NEW_FILE=''
+OPEN_FILE=1
+VIM=1
+VS_CODE=0
 
 ##### PARSE COMMAND LINE OPTIONS #####
 while [ $# -gt 0 ]; do
@@ -23,12 +35,25 @@ while [ $# -gt 0 ]; do
 		-h)
 			usage 0
 			;;
+		-c)
+			VIM=0
+			VS_CODE=1
+			;;
+		-n)
+			OPEN_FILE=0
+			;;
 		*)
 			NEW_FILE=$1
 			;;
 	esac
 	shift
 done
+
+### Check if NEW_FILE has been set ###
+if [ -z "${NEW_FILE}" ]; then
+	echo "Exit Status 1: No filename given"
+	exit 1
+fi
 
 ### If file exists, open file
 if [ -f "${NEW_FILE}" ]; then
@@ -146,4 +171,13 @@ EOF
 fi
 
 ##### Open new file #####
-vim ${NEW_FILE}
+if [ ${OPEN_FILE} = 1 ]; then
+	if [ ${VIM} = 1 ]; then
+		vim ${NEW_FILE}
+	elif [ ${VS_CODE} = 1 ]; then
+		code ${NEW_FILE}
+	else
+		echo "Exit Status 2: Unknown error."
+		exit 2
+	fi
+fi
