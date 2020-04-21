@@ -124,10 +124,14 @@ cat <<EOF > ${NEW_FILE}
 /// @desc:   NA
 /// @notes:  NA
 
+/// @INCLUDES
+#include <stdio.h>
+
+/// @MACROS
 #ifndef MACROS_H
 #define MACROS_H
 
-/// @COLORS
+/// COLORS
 #define AC_RED     "\x1b[31m"
 #define AC_GREEN   "\x1b[32m"
 #define AC_YELLOW  "\x1b[33m"
@@ -136,18 +140,17 @@ cat <<EOF > ${NEW_FILE}
 #define AC_CYAN    "\x1b[36m"
 #define AC_RESET   "\x1b[0m"
 
-/// @DEBUG
+/// DEBUG
 #define DEBUG_TYPE 1
 #if DEBUG_TYPE
-#define debug(M, ...) \
-	fprintf(stderr, AC_BLUE "DEBUG " AC_YELLOW "%s" AC_RESET ":" \
-	AC_YELLOW "%d" AC_RESET ":" AC_YELLOW "%s" AC_RESET ": " M "\n", \
+#define debug(M, ...) fprintf(stderr, AC_BLUE "DEBUG " AC_YELLOW "%s" AC_RESET ":" 	\\
+	AC_YELLOW "%d" AC_RESET ":" AC_YELLOW "%s" AC_RESET ": " M "\n", \\
 	__FILE__, __LINE__, __func__, ##__VA_ARGS__)
 #else
 	#define debug(M, ...) fprintf(stderr, "")
 #endif
 
-/// @STRING COMPARE
+/// STRING COMPARE
 #define streq(a, b) (strcmp((a), (b)) == 0)
 
 #endif
